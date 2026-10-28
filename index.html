@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Golden Goods</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin:0; background:#000; color:#f5f5f5; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; }
+  .box { width:100%; max-width:420px; text-align:center; }
+  h1 { letter-spacing:6px; font-weight:600; font-size:22px; margin:0 0 6px; }
+  .tag { color:#9ca3af; font-size:14px; margin-bottom:28px; }
+  .code { background:#161616; border:1px solid #333; border-radius:16px; padding:18px; margin:18px 0; }
+  .code small { color:#9ca3af; display:block; margin-bottom:6px; }
+  .code b { font-size:30px; letter-spacing:3px; }
+  a.btn { display:block; padding:16px; border-radius:14px; font-weight:700; text-decoration:none; margin:10px 0; font-size:16px; }
+  .main { background:#fff; color:#000; }
+  .ghost { border:1px solid #fff; color:#fff; }
+  p.note { color:#9ca3af; font-size:13px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>GOLDEN GOODS</h1>
+  <div class="tag">আপনার স্টাইল, আপনার পরিচয়</div>
+  <div class="code" id="codeBox" hidden><small>রেফারেল কোড</small><b id="code"></b></div>
+  <a class="btn main" id="open" href="#">অ্যাপে খুলুন</a>
+  <a class="btn ghost" id="dl" href="#">অ্যাপ ডাউনলোড করুন</a>
+  <p class="note">অ্যাপ নতুন ইনস্টল করলে, অ্যাকাউন্ট খোলার সময় বা অর্ডারের সময় উপরের রেফারেল কোডটি লিখুন।</p>
+</div>
+<script>
+  // ▼ অ্যাপের APK ডাউনলোড লিংক এখানে দিন (Play Store-এ গেলে Play Store লিংক)
+  var DOWNLOAD_URL = "";
+
+  var qs = new URLSearchParams(location.search);
+  var ref = (qs.get("ref") || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 20);
+  var prod = (qs.get("p") || "").replace(/[^A-Za-z0-9]/g, "").slice(0, 40);
+  var appUrl = "intent://ref/" + ref + (prod ? "?p=" + prod : "") + "#Intent;scheme=goldengoods;package=com.goldengoods.app;end";
+  document.getElementById("open").href = ref ? appUrl : "intent://ref/#Intent;scheme=goldengoods;package=com.goldengoods.app;end";
+  if (ref) { document.getElementById("code").textContent = ref; document.getElementById("codeBox").hidden = false; }
+  var dl = document.getElementById("dl");
+  if (DOWNLOAD_URL) dl.href = DOWNLOAD_URL; else dl.style.display = "none";
+  if (ref && /Android/i.test(navigator.userAgent)) { setTimeout(function () { location.href = appUrl; }, 400); }
+</script>
+</body>
+</html>
